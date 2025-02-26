@@ -27,12 +27,15 @@ class TypeScriptExample {
         // コンストラクタ内の
           // コメントも
         // 揃います
+        this.name = "example";
+        this.age = 20;
     }
 
     // メソッドの
         // コメントは
       // このように揃えられます
     public async exampleMethod<T>(param: T): Promise<void> {
+        console.log(`Name: ${this.name}, Age: ${this.age}`);
         // ジェネリクスを使用したメソッド内の
           // コメントも
         // きれいに揃います
@@ -53,14 +56,4 @@ class TypeScriptExample {
           // コメントも
         // 揃います
     }
-}
-
-// デコレータの
-    // コメントも
-  // 揃えられます
-@decorator
-class DecoratedClass {
-    // デコレートされたクラス内の
-        // コメントも
-      // 揃います
 }
