@@ -14,15 +14,24 @@
   "contributes": {
     "commands": [
       {
-        "command": "comment-indent-formatter.format",
-        "title": "%command.format.title%"
+        "command": "comment-indent-formatter.formatLeft",
+        "title": "%command.formatLeft.title%"
+      },
+      {
+        "command": "comment-indent-formatter.formatRight",
+        "title": "%command.formatRight.title%"
       }
     ],
     "menus": {
       "editor/context": [
         {
           "when": "editorHasSelection",
-          "command": "comment-indent-formatter.format",
+          "command": "comment-indent-formatter.formatLeft",
+          "group": "1_modification"
+        },
+        {
+          "when": "editorHasSelection",
+          "command": "comment-indent-formatter.formatRight",
           "group": "1_modification"
         }
       ]

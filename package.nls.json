@@ -1,3 +1,4 @@
 {
-    "command.format.title": "Beautify Comment Indentation"
+    "command.formatLeft.title": "Align Comments Left",
+    "command.formatRight.title": "Align Comments Right"
 }

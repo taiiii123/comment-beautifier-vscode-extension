@@ -1,3 +1,4 @@
 {
-    "command.format.title": "コメントを整形"
+    "command.formatLeft.title": "コメントを左揃えに整形",
+    "command.formatRight.title": "コメントを右揃えに整形"
 }

@@ -14,7 +14,9 @@ A Visual Studio Code extension that aligns comment indentation to make your code
 
 ## Features ✨
 
-- Automatically aligns single-line and multi-line comments
+- Two alignment options for comments:
+  - Left alignment (minimum indentation)
+  - Right alignment (maximum indentation)
 - Supports multiple programming languages:
   - TypeScript/JavaScript
   - Python
@@ -32,8 +34,10 @@ A Visual Studio Code extension that aligns comment indentation to make your code
 ## Usage 💡
 
 1. Select the code block containing comments you want to format
-2. Right-click and select "Beautify Comment Indentation" from the context menu
-3. Comments will be aligned to maintain consistent indentation
+2. Right-click and select either:
+   - "Align Comments Left" for minimum indentation
+   - "Align Comments Right" for maximum indentation
+3. Comments will be aligned according to your choice
 
 ### Example
 
@@ -46,7 +50,16 @@ function example() {
 }
 ```
 
-After:
+After (Left alignment):
+```javascript
+function example() {
+// This is a comment
+// Another comment
+// One more comment
+}
+```
+
+After (Right alignment):
 ```javascript
 function example() {
     // This is a comment
