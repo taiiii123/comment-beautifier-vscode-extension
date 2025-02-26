@@ -3,9 +3,23 @@
   "displayName": "Comment Beautifier",
   "description": "Format and align your code comments automatically. Makes comments more readable by adjusting indentation and alignment",
   "version": "0.0.1",
+  "icon": "images/icon.png",
   "engines": {
     "vscode": "^1.97.0"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/taiiii123/comment-beautifier-vscode-extension.git"
+  },
+  "publisher": "Y3191",
+  "keywords": [
+    "comment",
+    "formatting",
+    "beautifier",
+    "alignment",
+    "indentation",
+    "code-formatting"
+  ],
   "categories": [
     "Other"
   ],
