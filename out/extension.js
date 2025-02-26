@@ -34,7 +34,6 @@ var __importStar = (this && this.__importStar) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.activate = activate;
-exports.deactivate = deactivate;
 const vscode = __importStar(require("vscode"));
 const languageRules_1 = require("./utils/languageRules");
 function formatComments(editor, alignment) {
@@ -115,5 +114,4 @@ function activate(context) {
     });
     context.subscriptions.push(leftDisposable, rightDisposable);
 }
-function deactivate() { }
 //# sourceMappingURL=extension.js.map

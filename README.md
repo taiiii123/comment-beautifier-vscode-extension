@@ -10,7 +10,7 @@ A Visual Studio Code extension that aligns comment indentation to make your code
 
 ### Demo
 
-<p align="center"><img src="https://github.com/user-attachments/assets/be91f613-d954-4e39-85a2-643a5c110ae7" style="filter: drop-shadow(10px 10px 10px rgba(0, 0, 0, 0.5));"/></p>
+<p align="center"><img src="" style="filter: drop-shadow(10px 10px 10px rgba(0, 0, 0, 0.5));"/></p>
 
 ## Features ✨
 
@@ -38,6 +38,8 @@ A Visual Studio Code extension that aligns comment indentation to make your code
    - "Align Comments Left" for minimum indentation
    - "Align Comments Right" for maximum indentation
 3. Comments will be aligned according to your choice
+
+<img src="" height=250 style="filter: drop-shadow(10px 10px 10px rgba(0, 0, 0, 0.5));"></img>
 
 ### Example
 

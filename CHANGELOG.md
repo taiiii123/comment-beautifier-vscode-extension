@@ -10,7 +10,7 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 - Initial release
 - Support for formatting comment indentation in multiple languages:
   - TypeScript/JavaScript (`//`, `/* */`)
-  - Python (`#`, `"""`, `'''`)
+  - Python (`#`)
   - Java (`//`, `/* */`)
   - C/C++ (`//`, `/* */`)
   - C# (`//`, `/* */`)
