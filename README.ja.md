@@ -10,11 +10,13 @@
 
 ### 動作例
 
-<p align="center"><img src="https://github.com/user-attachments/assets/be91f613-d954-4e39-85a2-643a5c110ae7" style="filter: drop-shadow(10px 10px 10px rgba(0, 0, 0, 0.5));"/></p>
+<p align="center"><img src="https://github.com/user-attachments/assets/d25ef374-8fec-4d6b-bd80-5c27f5e75049" style="filter: drop-shadow(10px 10px 10px rgba(0, 0, 0, 0.5));"/></p>
 
 ## 機能 ✨
 
-- 単一行コメントと複数行コメントを自動的に整列
+- 2種類のコメント配置オプション：
+  - 左揃え（最小インデント）
+  - 右揃え（最大インデント）
 - 以下のプログラミング言語をサポート：
   - TypeScript/JavaScript
   - Python
@@ -32,8 +34,12 @@
 ## 使い方 💡
 
 1. フォーマットしたいコメントを含むコードブロックを選択
-2. 右クリックして、コンテキストメニューから「コメントを整形」を選択
-3. コメントが一定のインデントに揃えられます
+2. 右クリックして、以下のいずれかを選択：
+   - 「コメントを左揃えに整形」で最小インデントに揃える
+   - 「コメントを右揃えに整形」で最大インデントに揃える
+3. 選択した方法でコメントが整形されます
+
+<img src="https://github.com/user-attachments/assets/1528d74d-f853-4a54-9bc9-43ef8a873873" height=500 style="filter: drop-shadow(10px 10px 10px rgba(0, 0, 0, 0.5));"></img>
 
 ## 例
 
@@ -46,7 +52,16 @@ function example() {
 }
 ```
 
-整形後：
+整形後（左揃え）：
+```javascript
+function example() {
+// これはコメントです
+// 別のコメント
+// もう1つのコメント
+}
+```
+
+整形後（右揃え）：
 ```javascript
 function example() {
     // これはコメントです

@@ -10,7 +10,7 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 - Initial release
 - Support for formatting comment indentation in multiple languages:
   - TypeScript/JavaScript (`//`, `/* */`)
-  - Python (`#`, `"""`, `'''`)
+  - Python (`#`)
   - Java (`//`, `/* */`)
   - C/C++ (`//`, `/* */`)
   - C# (`//`, `/* */`)
@@ -21,7 +21,9 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
   - Swift (`//`, `/* */`)
   - SQL (`--`, `/* */`)
   - Gradle (Kotlin DSL) (`//`, `/* */`)
-- Context menu command "Beautify Comment Indentation"
-- Multi-language support for command name:
-  - English: "Beautify Comment Indentation"
-  - Japanese: "コメントを整形""
+- Two comment alignment options:
+  - Left alignment (minimum indentation)
+  - Right alignment (maximum indentation)
+- Multi-language support for command names:
+  - English: "Align Comments Left", "Align Comments Right"
+  - Japanese: "コメントを左揃えに整形", "コメントを右揃えに整形"
