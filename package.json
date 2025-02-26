@@ -1,7 +1,7 @@
 {
   "name": "comment-beautifier",
-  "displayName": "",
-  "description": "",
+  "displayName": "Comment Beautifier",
+  "description": "Format and align your code comments automatically. Makes comments more readable by adjusting indentation and alignment",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.97.0"

@@ -10,7 +10,7 @@
 
 ### 動作例
 
-<p align="center"><img src="" style="filter: drop-shadow(10px 10px 10px rgba(0, 0, 0, 0.5));"/></p>
+<p align="center"><img src="https://github.com/user-attachments/assets/d25ef374-8fec-4d6b-bd80-5c27f5e75049" style="filter: drop-shadow(10px 10px 10px rgba(0, 0, 0, 0.5));"/></p>
 
 ## 機能 ✨
 
@@ -39,7 +39,7 @@
    - 「コメントを右揃えに整形」で最大インデントに揃える
 3. 選択した方法でコメントが整形されます
 
-<img src="" height=250 style="filter: drop-shadow(10px 10px 10px rgba(0, 0, 0, 0.5));"></img>
+<img src="https://github.com/user-attachments/assets/1528d74d-f853-4a54-9bc9-43ef8a873873" height=500 style="filter: drop-shadow(10px 10px 10px rgba(0, 0, 0, 0.5));"></img>
 
 ## 例
 
