@@ -37,4 +37,8 @@ class TypeScriptExample {
         // 揃います
     }
 }
+const name = "aaa"; // 名前
+const age = 3; // 年齢
+const language = "TypeScript"; // 使用言語
+const isActive = true; // 有効かどうか
 //# sourceMappingURL=typescript-example.js.map
