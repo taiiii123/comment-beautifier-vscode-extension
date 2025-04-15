@@ -74,6 +74,7 @@ function formatComments(editor: vscode.TextEditor, alignment: 'left' | 'right') 
     for (const block of multiLineCommentBlocks) {
         // 複数行コメントのインデントを分析
         let blockIndent = Infinity;
+        let maxIndent = 0;
 
         // ブロック内の各行を分析してインデントの範囲を取得
         for (let i = block.start; i <= block.end; i++) {
@@ -83,11 +84,12 @@ function formatComments(editor: vscode.TextEditor, alignment: 'left' | 'right') 
             // 空行でなければインデントを考慮
             if (line.trim().length > 0) {
                 blockIndent = Math.min(blockIndent, lineIndent);
+                maxIndent = Math.max(maxIndent, lineIndent);
             }
         }
 
-        // 左揃えの場合は指定したインデントを使用
-        const targetIndent = blockIndent;
+        // 左揃えの場合は最小インデント、右揃えの場合は最大インデント
+        const targetIndent = alignment === 'left' ? blockIndent : maxIndent;
 
         // コメントブロックを整形
         for (let i = block.start; i <= block.end; i++) {
@@ -103,7 +105,7 @@ function formatComments(editor: vscode.TextEditor, alignment: 'left' | 'right') 
                 // 終了行 - 統一されたインデントを使用
                 if (lineContent === block.rule.end) {
                     // 終了記号のみの行
-                    lines[i] = ' '.repeat(targetIndent) + block.rule.end;
+                    lines[i] = ' '.repeat(targetIndent) + ' ' + block.rule.end;
                 } else {
                     // 終了記号の前にコンテンツがある場合
                     const contentBeforeEnd = lineContent.substring(0, lineContent.indexOf(block.rule.end)).trimRight();
@@ -264,6 +266,7 @@ function formatComments(editor: vscode.TextEditor, alignment: 'left' | 'right') 
                 return codePart + padding + data.commentSymbol + ' ' + commentContent;
             }
         } else {
+            // TODO: 右揃えの処理 インデントの調整 4スペースを修正
             // 右揃え：最大幅に合わせてパディング
             const padding = ' '.repeat(Math.max(1, maxCodeLength - codePart.length + 4));
             return codePart + padding + data.commentSymbol + ' ' + commentContent;

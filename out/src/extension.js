@@ -99,6 +99,7 @@ function formatComments(editor, alignment) {
     for (const block of multiLineCommentBlocks) {
         // 複数行コメントのインデントを分析
         let blockIndent = Infinity;
+        let maxIndent = 0;
         // ブロック内の各行を分析してインデントの範囲を取得
         for (let i = block.start; i <= block.end; i++) {
             const line = lines[i].trimEnd();
@@ -106,10 +107,11 @@ function formatComments(editor, alignment) {
             // 空行でなければインデントを考慮
             if (line.trim().length > 0) {
                 blockIndent = Math.min(blockIndent, lineIndent);
+                maxIndent = Math.max(maxIndent, lineIndent);
             }
         }
-        // 左揃えの場合は指定したインデントを使用
-        const targetIndent = blockIndent;
+        // 左揃えの場合は最小インデント、右揃えの場合は最大インデント
+        const targetIndent = alignment === 'left' ? blockIndent : maxIndent;
         // コメントブロックを整形
         for (let i = block.start; i <= block.end; i++) {
             const line = lines[i].trimEnd();
@@ -124,7 +126,7 @@ function formatComments(editor, alignment) {
                 // 終了行 - 統一されたインデントを使用
                 if (lineContent === block.rule.end) {
                     // 終了記号のみの行
-                    lines[i] = ' '.repeat(targetIndent) + block.rule.end;
+                    lines[i] = ' '.repeat(targetIndent) + ' ' + block.rule.end;
                 }
                 else {
                     // 終了記号の前にコンテンツがある場合
@@ -272,7 +274,7 @@ function formatComments(editor, alignment) {
         }
         else {
             // 右揃え：最大幅に合わせてパディング
-            const padding = ' '.repeat(Math.max(1, maxCodeLength - codePart.length + 4));
+            const padding = ' '.repeat(Math.max(1, maxCodeLength - codePart.length + 10));
             return codePart + padding + data.commentSymbol + ' ' + commentContent;
         }
     });
