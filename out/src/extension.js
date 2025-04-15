@@ -95,81 +95,72 @@ function formatComments(editor, alignment) {
             multiLineCommentBlocks.push(currentBlock);
         }
     }
-    // 複数行コメントの整形
+    // 複数行コメントの整形処理を改善
     for (const block of multiLineCommentBlocks) {
-        // 複数行コメントの各行のインデントを分析
-        let minIndent = Infinity;
-        let asteriskPositions = [];
-        // 最初と最後の行を特別扱い（開始・終了記号がある）
+        // 複数行コメントのインデントを分析
+        let blockIndent = Infinity;
+        // ブロック内の各行を分析してインデントの範囲を取得
         for (let i = block.start; i <= block.end; i++) {
             const line = lines[i].trimEnd();
-            const leadingSpaces = line.length - line.trimLeft().length;
-            // 最初の非空白文字が'*'かチェック
-            const trimmedLine = line.trimLeft();
-            if (trimmedLine.length > 0 && trimmedLine[0] === '*') {
-                asteriskPositions.push(leadingSpaces);
-            }
-            // 最小インデントを計算（空行は除く）
+            const lineIndent = line.length - line.trimLeft().length;
+            // 空行でなければインデントを考慮
             if (line.trim().length > 0) {
-                minIndent = Math.min(minIndent, leadingSpaces);
+                blockIndent = Math.min(blockIndent, lineIndent);
             }
         }
-        // '*'の位置を揃える（最も左側の位置を基準に）
-        const targetAsteriskPos = minIndent + 1; // インデント + 1スペース
+        // 左揃えの場合は指定したインデントを使用
+        const targetIndent = blockIndent;
         // コメントブロックを整形
         for (let i = block.start; i <= block.end; i++) {
             const line = lines[i].trimEnd();
-            // 開始行または終了行の特別処理
-            if (i === block.start && line.includes(block.rule.start)) {
-                // 開始行はそのまま
-                continue;
+            const lineContent = line.trimLeft();
+            if (i === block.start) {
+                // 開始行 - 統一されたインデントを使用
+                const afterCommentStart = lineContent.substring(block.rule.start.length).trimLeft();
+                lines[i] = ' '.repeat(targetIndent) + block.rule.start +
+                    (afterCommentStart ? ' ' + afterCommentStart : '');
             }
-            else if (i === block.end && line.includes(block.rule.end)) {
-                // 終了行
-                if (line.trim() === block.rule.end) {
+            else if (i === block.end && lineContent.includes(block.rule.end)) {
+                // 終了行 - 統一されたインデントを使用
+                if (lineContent === block.rule.end) {
                     // 終了記号のみの行
-                    lines[i] = ' '.repeat(minIndent) + block.rule.end;
+                    lines[i] = ' '.repeat(targetIndent) + block.rule.end;
                 }
                 else {
-                    // '*/'の前にコンテンツがある場合
-                    const trimmedLine = line.trimLeft();
-                    if (trimmedLine.startsWith('*') && !trimmedLine.startsWith('*/')) {
-                        const contentStart = line.indexOf('*') + 1;
-                        const content = line.substring(contentStart).trimLeft();
-                        const endIndex = content.indexOf(block.rule.end);
-                        if (endIndex !== -1) {
-                            // '*/'の前にコンテンツがある
-                            const contentBeforeEnd = content.substring(0, endIndex).trimEnd();
-                            lines[i] = ' '.repeat(targetAsteriskPos) + '* ' + contentBeforeEnd + ' ' + block.rule.end;
-                        }
-                        else {
-                            lines[i] = ' '.repeat(targetAsteriskPos) + '* ' + content;
-                        }
+                    // 終了記号の前にコンテンツがある場合
+                    const contentBeforeEnd = lineContent.substring(0, lineContent.indexOf(block.rule.end)).trimRight();
+                    // アスタリスクがある場合はそれを含めたフォーマット
+                    if (contentBeforeEnd.startsWith('*') && contentBeforeEnd !== '*') {
+                        const content = contentBeforeEnd.substring(1).trimLeft();
+                        lines[i] = ' '.repeat(targetIndent) + '* ' + content + ' ' + block.rule.end;
+                    }
+                    else {
+                        lines[i] = ' '.repeat(targetIndent) + contentBeforeEnd + ' ' + block.rule.end;
                     }
                 }
             }
             else {
-                // 中間行
-                const trimmedLine = line.trimLeft();
-                if (trimmedLine.startsWith('*')) {
-                    const contentStart = line.indexOf('*') + 1;
-                    const content = line.substring(contentStart).trimLeft();
-                    lines[i] = ' '.repeat(targetAsteriskPos) + '* ' + content;
-                }
-                else if (trimmedLine.length > 0) {
-                    // '*'で始まらないが内容がある行
-                    lines[i] = ' '.repeat(targetAsteriskPos) + '* ' + trimmedLine;
+                // 中間行 - アスタリスクを常に同じ位置に配置
+                // 開始行のコメント記号の長さを考慮して、アスタリスクの位置を調整する
+                const asteriskPos = line.indexOf('*');
+                let content = '';
+                if (asteriskPos !== -1 && line.charAt(asteriskPos + 1) !== '/') {
+                    // アスタリスクがある行
+                    content = line.substring(asteriskPos + 1).trimLeft();
                 }
                 else {
-                    // 空行
-                    lines[i] = ' '.repeat(targetAsteriskPos) + '*';
+                    // アスタリスクがない行
+                    content = lineContent;
                 }
+                // 開始行のコメント記号 /* の後に合わせて * を配置するため、1つスペースを追加
+                lines[i] = ' '.repeat(targetIndent) + ' * ' + content;
             }
         }
     }
     // 単一行コメントの処理
     // すべての行を分析してコメント位置と最大コード長を見つける
     let maxCodeLength = 0;
+    let minCommentIndex = Infinity; // 最も左にあるコメントの位置を追跡
     const lineData = lines.map(line => {
         const trimmed = line.trimEnd();
         let commentIndex = -1;
@@ -197,13 +188,12 @@ function formatComments(editor, alignment) {
                 isStandaloneComment = trimmed.substring(0, index).trim() === '';
             }
         }
-        if (commentIndex !== -1) {
-            // コード部分の長さを計算（末尾の空白を除く）
+        if (commentIndex !== -1 && !isStandaloneComment) {
+            // 非単独コメント行の場合、最小コメント位置を追跡
+            minCommentIndex = Math.min(minCommentIndex, commentIndex);
+            // コード部分の長さも計算（末尾の空白を除く）
             const codePartTrimmed = line.slice(0, commentIndex).trimEnd();
-            // 単独のコメントでない場合のみ、最大コード長を考慮
-            if (!isStandaloneComment) {
-                maxCodeLength = Math.max(maxCodeLength, codePartTrimmed.length);
-            }
+            maxCodeLength = Math.max(maxCodeLength, codePartTrimmed.length);
         }
         return {
             line,
@@ -269,8 +259,16 @@ function formatComments(editor, alignment) {
         const codePart = data.line.slice(0, data.commentIndex).trimEnd();
         const commentContent = data.line.slice(data.commentIndex + data.commentSymbol.length).trimStart();
         if (alignment === 'left') {
-            // 左揃え：コード部分の直後にコメントを配置（スペースを1つだけ）
-            return codePart + ' ' + data.commentSymbol + ' ' + commentContent;
+            // 左揃え：最小コメント位置に合わせてパディング
+            // コード部分が最小コメント位置よりも長い場合は、コード部分の後に1つのスペースを追加
+            if (codePart.length >= minCommentIndex) {
+                return codePart + ' ' + data.commentSymbol + ' ' + commentContent;
+            }
+            else {
+                // コード部分が最小コメント位置より短い場合は、パディングを追加
+                const padding = ' '.repeat(minCommentIndex - codePart.length);
+                return codePart + padding + data.commentSymbol + ' ' + commentContent;
+            }
         }
         else {
             // 右揃え：最大幅に合わせてパディング
