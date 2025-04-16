@@ -34,7 +34,6 @@ var __importStar = (this && this.__importStar) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.activate = activate;
-// extension.ts
 const vscode = __importStar(require("vscode"));
 const languageRules_1 = require("./utils/languageRules");
 function formatComments(editor, alignment) {
@@ -248,7 +247,7 @@ function formatComments(editor, alignment) {
             }
         }
     }
-    // 変更部分：すべての行のコメント位置を分析して最大位置を見つける
+    // すべての行のコメント位置を分析して最大位置を見つける
     let maxCommentPosition = 0;
     for (const data of lineData) {
         if (data.commentIndex !== -1) {
