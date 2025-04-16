@@ -1,4 +1,3 @@
-// languageRules.ts
 interface CommentRule {
     single: string[];
     multi?: { start: string; end: string }[];

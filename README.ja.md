@@ -6,7 +6,7 @@
 
 # Comment Beautifier - VS Code Extension
 
-コードの可読性を向上させるために、コメントのインデントを揃えるVisual Studio Code拡張機能です。
+コメントのインデントを揃えるVisual Studio Code拡張機能です。
 
 ### 動作例
 
@@ -38,6 +38,9 @@
    - 「コメントを左揃えに整形」で最小インデントに揃える
    - 「コメントを右揃えに整形」で最大インデントに揃える
 3. 選択した方法でコメントが整形されます
+
+> ⚠️ **コメントを整形するには、必ずコードブロックの最初の文字から最後の文字までを正確に選択してください。**
+> 一部だけを選択すると、意図しない整形になることがあります。
 
 <img src="https://github.com/user-attachments/assets/1528d74d-f853-4a54-9bc9-43ef8a873873" height=500 style="filter: drop-shadow(10px 10px 10px rgba(0, 0, 0, 0.5));"></img>
 

@@ -6,7 +6,7 @@
 
 # Comment Beautifier - VS Code Extension
 
-A Visual Studio Code extension that aligns comment indentation to make your code more readable.
+This is a Visual Studio Code extension that aligns comment indentation.
 
 ### Demo
 
@@ -38,6 +38,10 @@ A Visual Studio Code extension that aligns comment indentation to make your code
    - "Align Comments Left" for minimum indentation
    - "Align Comments Right" for maximum indentation
 3. Comments will be aligned according to your choice
+
+> ⚠️ **Note:**
+> **To properly align comments, be sure to select the entire code block from the first to the last character.**
+> Partial selections may lead to unexpected formatting results.
 
 <img src="https://github.com/user-attachments/assets/fc4c7b07-888f-4a65-989b-88b089e26e09" height=500 style="filter: drop-shadow(10px 10px 10px rgba(0, 0, 0, 0.5));"></img>
 

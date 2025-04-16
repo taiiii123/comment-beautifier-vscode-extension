@@ -1,4 +1,3 @@
-// extension.ts
 import * as vscode from 'vscode';
 import { LANGUAGE_COMMENT_RULES } from './utils/languageRules';
 
@@ -240,6 +239,14 @@ function formatComments(editor: vscode.TextEditor, alignment: 'left' | 'right') 
         }
     }
 
+    // すべての行のコメント位置を分析して最大位置を見つける
+    let maxCommentPosition = 0;
+    for (const data of lineData) {
+        if (data.commentIndex !== -1) {
+            maxCommentPosition = Math.max(maxCommentPosition, data.commentIndex);
+        }
+    }
+
     // コード付きのコメント行を処理（非単独コメント行）
     const formattedLines = lineData.map((data, index) => {
         // 複数行コメント内の行または既に処理された単独コメント行はそのフォーマット済みの値を使用
@@ -266,9 +273,9 @@ function formatComments(editor: vscode.TextEditor, alignment: 'left' | 'right') 
                 return codePart + padding + data.commentSymbol + ' ' + commentContent;
             }
         } else {
-            // TODO: 右揃えの処理 インデントの調整 4スペースを修正
-            // 右揃え：最大幅に合わせてパディング
-            const padding = ' '.repeat(Math.max(1, maxCodeLength - codePart.length + 4));
+            // 右揃え：最も右のコメント位置に合わせてパディング
+            // すべてのコメントを同じ位置に揃える
+            const padding = ' '.repeat(Math.max(1, maxCommentPosition - codePart.length));
             return codePart + padding + data.commentSymbol + ' ' + commentContent;
         }
     });
